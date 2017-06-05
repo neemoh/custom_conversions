@@ -14,7 +14,6 @@ void conversions::RvecToKDLRot(const cv::Vec3d _rvec, KDL::Rotation &_kdl) {
         mat(2, 0), mat(2, 1), mat(2, 2));
 }
 
-
 void conversions::RvecTvecToKDLFrame(
         const cv::Vec3d _rvec, const cv::Vec3d _tvec, KDL::Frame &_kdl) {
     cv::Matx33d mat;

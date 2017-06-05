@@ -25,8 +25,18 @@ find_package(catkin REQUIRED
 ## CATKIN_DEPENDS: catkin_packages dependent projects also need
 ## DEPENDS: system dependencies of this project that dependent projects also need
 
+
+catkin_package(
+        INCLUDE_DIRS include/
+        #  LIBRARIES custom_conversions
+        LIBRARIES ${PROJECT_NAME}
+        #  CATKIN_DEPENDS other_catkin_pkg
+        CATKIN_DEPENDS geometry_msgs tf_conversions
+
+)
+
 include_directories(
-		include
+		include/
 		${catkin_INCLUDE_DIRS}
 )
 
@@ -39,13 +49,6 @@ target_link_libraries(custom_conversions
 		${OpenCV_LIBRARIES}
 		)
 
-catkin_package(
-		INCLUDE_DIRS include
-		#  LIBRARIES custom_conversions
-		#  CATKIN_DEPENDS other_catkin_pkg
-		DEPENDS geometry_msgs tf_conversions
-		LIBRARIES ${PROJECT_NAME}
-)
 
 #i n catkin, libraries are installed in a lib/ directory shared by all the packages in that entire ROS distribution.
 install(TARGETS custom_conversions
