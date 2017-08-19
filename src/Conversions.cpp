@@ -136,3 +136,40 @@ void conversions::AxisAngleToKDLRotation(KDL::Vector axis, double angle, KDL::Ro
                         m[2][0], m[2][1], m[2][2]);
 
 }
+
+
+
+geometry_msgs::Pose conversions::KDLFramePoseMsg(const KDL::Frame &in_pose){
+
+    double qx, qy, qz, qw;
+    geometry_msgs::Pose pose_msg;
+
+    in_pose.M.GetQuaternion(qx, qy, qz, qw);
+    pose_msg.position.x = in_pose.p.x();
+    pose_msg.position.y = in_pose.p.y();
+    pose_msg.position.z = in_pose.p.z();
+
+    pose_msg.orientation.x = qx;
+    pose_msg.orientation.y = qy;
+    pose_msg.orientation.z = qz;
+    pose_msg.orientation.w = qw;
+
+    return pose_msg;
+}
+
+
+
+KDL::Frame conversions::PoseMsgToKDLFrame(const geometry_msgs::Pose  &in_pose){
+
+    KDL::Frame frame;
+
+    frame.p.x(in_pose.position.x);
+    frame.p.y(in_pose.position.y);
+    frame.p.z(in_pose.position.z);
+
+    frame.M = KDL::Rotation::Quaternion(
+        in_pose.orientation.x, in_pose.orientation.y,
+        in_pose.orientation.z, in_pose.orientation.w);
+
+    return frame;
+}

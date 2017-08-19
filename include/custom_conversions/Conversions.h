@@ -40,6 +40,10 @@ namespace conversions {
 
     void KDLFrameToVector(const KDL::Frame &in_pose,  std::vector<double> &out_vector);
 
+    geometry_msgs::Pose KDLFramePoseMsg(const KDL::Frame &in_pose);
+
+    KDL::Frame PoseMsgToKDLFrame(const geometry_msgs::Pose  &in_pose);
+
     void AxisAngleToKDLRotation(KDL::Vector axis, double angle, KDL::Rotation & out);
 };
 
