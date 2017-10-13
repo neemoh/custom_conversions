@@ -1,8 +1,6 @@
 
 #include <vector>
 
-#include <opencv2/calib3d.hpp>
-
 #include "custom_conversions/Conversions.h"
 
 using namespace std;

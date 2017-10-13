@@ -6,11 +6,10 @@
 #define TELEOP_VISION_CONVERSIONS_HPP_HPP
 
 #include <vector>
-
-#include <opencv2/core.hpp>
 #include <geometry_msgs/Pose.h>
 #include <kdl/frames.hpp>
 #include <tf_conversions/tf_kdl.h>
+#include <opencv-3.2.0-dev/opencv2/opencv.hpp>
 
 namespace conversions {
     // some self explanatory conversions!
