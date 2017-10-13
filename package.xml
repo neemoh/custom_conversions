@@ -55,9 +55,6 @@
     <run_depend>tf_conversions</run_depend>
     <run_depend>opencv2</run_depend>
 
-    <buildtool_depend>geometry_msgs</buildtool_depend>
-    <buildtool_depend>tf_conversions</buildtool_depend>
-
   <!-- The export tag contains other, unspecified, tags -->
   <export>
     <!-- Other tools can request additional information be placed here -->

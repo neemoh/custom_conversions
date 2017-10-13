@@ -12,6 +12,7 @@ find_package(catkin REQUIRED
 		rospy
 		geometry_msgs
 		tf_conversions
+		cv_bridge
 		)
 
 
