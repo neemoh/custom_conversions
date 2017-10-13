@@ -42,6 +42,7 @@ include_directories(
 
 add_library(custom_conversions
 		src/Conversions.cpp
+		include/custom_conversions/Conversions.h
 		)
 
 target_link_libraries(custom_conversions
