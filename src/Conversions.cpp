@@ -99,6 +99,20 @@ void conversions::KDLFrameToVector(const KDL::Frame &in_pose,  vector<double> &o
 }
 
 
+void conversions::VectorToRvectvec(const std::vector<double> &in_vec,
+                                  cv::Vec3d &out_rvec,
+                      cv::Vec3d &out_tvec){
+    KDL::Rotation krot = KDL::Rotation::Quaternion( in_vec[3], in_vec[4],
+                                                    in_vec[5],in_vec[6]);
+    cv::Matx33d mat;
+    conversions::KDLRotToMatx33d(krot, mat);
+    cv::Rodrigues(mat, out_rvec );
+
+    out_tvec.val[0] = in_vec[0];
+    out_tvec.val[1] = in_vec[1];
+    out_tvec.val[2] = in_vec[2];
+
+}
 
 void conversions::AxisAngleToKDLRotation(KDL::Vector axis, double angle, KDL::Rotation & out) {
 

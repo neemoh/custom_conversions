@@ -37,6 +37,9 @@ namespace conversions {
 
     void VectorToKDLFrame(const std::vector<double> &in_vec, KDL::Frame &out_pose);
 
+    void VectorToRvectvec(const std::vector<double> &in_vec, cv::Vec3d &_rvec,
+    cv::Vec3d &_tvec);
+
     void KDLFrameToVector(const KDL::Frame &in_pose,  std::vector<double> &out_vector);
 
     geometry_msgs::Pose KDLFramePoseMsg(const KDL::Frame &in_pose);
