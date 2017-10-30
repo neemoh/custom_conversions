@@ -71,8 +71,8 @@ void conversions::PoseMsgToVector(const geometry_msgs::Pose in_pose,
     out_vec.at(6) = in_pose.orientation.w;
 }
 
-void conversions::VectorToPoseMsg(const vector<double> in_vec,
-                                  geometry_msgs::Pose &out_pose) {
+void conversions::PoseVectorToPoseMsg(const vector<double> in_vec,
+                                      geometry_msgs::Pose &out_pose) {
 
     out_pose.position.x = in_vec.at(0);
     out_pose.position.y = in_vec.at(1);
@@ -84,10 +84,21 @@ void conversions::VectorToPoseMsg(const vector<double> in_vec,
 
 }
 
-void conversions::VectorToKDLFrame(const vector<double> &in_vec, KDL::Frame &out_pose) {
+void conversions::PoseVectorToKDLFrame(const vector<double> &in_vec,
+                                       KDL::Frame &out_pose) {
     geometry_msgs::Pose pose_msg;
-    conversions::VectorToPoseMsg(in_vec, pose_msg);
+    conversions::PoseVectorToPoseMsg(in_vec, pose_msg);
     tf::poseMsgToKDL(pose_msg, out_pose);
+}
+
+KDL::Frame conversions::PoseVectorToKDLFrame(const std::vector<double> &in_vec){
+
+    geometry_msgs::Pose pose_msg;
+    conversions::PoseVectorToPoseMsg(in_vec, pose_msg);
+
+    KDL::Frame out_pose;
+    tf::poseMsgToKDL(pose_msg, out_pose);
+    return out_pose;
 }
 
 
@@ -99,9 +110,9 @@ void conversions::KDLFrameToVector(const KDL::Frame &in_pose,  vector<double> &o
 }
 
 
-void conversions::VectorToRvectvec(const std::vector<double> &in_vec,
-                                  cv::Vec3d &out_rvec,
-                      cv::Vec3d &out_tvec){
+void conversions::PoseVectorToRvectvec(const std::vector<double> &in_vec,
+                                       cv::Vec3d &out_rvec,
+                                       cv::Vec3d &out_tvec){
     KDL::Rotation krot = KDL::Rotation::Quaternion( in_vec[3], in_vec[4],
                                                     in_vec[5],in_vec[6]);
     cv::Matx33d mat;
@@ -114,6 +125,27 @@ void conversions::VectorToRvectvec(const std::vector<double> &in_vec,
 
 }
 
+void conversions::QuatVectorToKDLRot(const std::vector<double> &in_vec,
+                                    KDL::Rotation
+&out_rot){
+
+    if(in_vec.size()!=4)
+        throw std::runtime_error("QuatVectorToKDLRot accepts only vector of "
+                                         "size 4.");
+    else
+        out_rot = KDL::Rotation::Quaternion( in_vec[0], in_vec[1], in_vec[4],
+                                             in_vec[3]);
+}
+
+KDL::Rotation QuatVectorToKDLRot(const std::vector<double> &in_vec){
+
+    if(in_vec.size()!=4)
+        throw std::runtime_error("QuatVectorToKDLRot accepts only vector of "
+                                         "size 4.");
+    else
+        return KDL::Rotation::Quaternion( in_vec[0], in_vec[1], in_vec[4],
+                                          in_vec[3]);
+}
 void conversions::AxisAngleToKDLRotation(KDL::Vector axis, double angle, KDL::Rotation & out) {
 
     double c = cos(angle);

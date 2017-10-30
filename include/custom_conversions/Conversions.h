@@ -32,13 +32,23 @@ namespace conversions {
     void PoseMsgToVector(const geometry_msgs::Pose in_pose,
                          std::vector<double> &out_vec);
 
-    void VectorToPoseMsg(const std::vector<double> in_vec,
-                         geometry_msgs::Pose &out_pose);
+    void PoseVectorToPoseMsg(const std::vector<double> in_vec,
+                             geometry_msgs::Pose &out_pose);
 
-    void VectorToKDLFrame(const std::vector<double> &in_vec, KDL::Frame &out_pose);
+    void PoseVectorToKDLFrame(const std::vector<double> &in_vec,
+                              KDL::Frame &out_pose);
 
-    void VectorToRvectvec(const std::vector<double> &in_vec, cv::Vec3d &_rvec,
-    cv::Vec3d &_tvec);
+    KDL::Frame PoseVectorToKDLFrame(const std::vector<double> &in_vec);
+
+    void PoseVectorToRvectvec(const std::vector<double> &in_vec,
+                              cv::Vec3d &_rvec,
+                              cv::Vec3d &_tvec);
+
+
+    void QuatVectorToKDLRot(const std::vector<double> &in_vec, KDL::Rotation
+    &out_rot);
+
+    KDL::Rotation QuatVectorToKDLRot(const std::vector<double> &in_vec);
 
     void KDLFrameToVector(const KDL::Frame &in_pose,  std::vector<double> &out_vector);
 
