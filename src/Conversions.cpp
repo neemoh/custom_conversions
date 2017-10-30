@@ -62,43 +62,63 @@ void conversions::KDLRotToMatx33d(const KDL::Rotation _kdl, cv::Matx33d &_mat) {
 void conversions::PoseMsgToVector(const geometry_msgs::Pose in_pose,
                                   vector<double> &out_vec) {
 
-    out_vec.at(0) = in_pose.position.x;
-    out_vec.at(1) = in_pose.position.y;
-    out_vec.at(2) = in_pose.position.z;
-    out_vec.at(3) = in_pose.orientation.x;
-    out_vec.at(4) = in_pose.orientation.y;
-    out_vec.at(5) = in_pose.orientation.z;
-    out_vec.at(6) = in_pose.orientation.w;
+    if(out_vec.size()!=7)
+        throw std::runtime_error("PoseMsgToVector accepts only vector of "
+                                         "size 7.");
+    else {
+        out_vec.at(0) = in_pose.position.x;
+        out_vec.at(1) = in_pose.position.y;
+        out_vec.at(2) = in_pose.position.z;
+        out_vec.at(3) = in_pose.orientation.x;
+        out_vec.at(4) = in_pose.orientation.y;
+        out_vec.at(5) = in_pose.orientation.z;
+        out_vec.at(6) = in_pose.orientation.w;
+    }
 }
 
 void conversions::PoseVectorToPoseMsg(const vector<double> in_vec,
                                       geometry_msgs::Pose &out_pose) {
 
-    out_pose.position.x = in_vec.at(0);
-    out_pose.position.y = in_vec.at(1);
-    out_pose.position.z = in_vec.at(2);
-    out_pose.orientation.x = in_vec.at(3);
-    out_pose.orientation.y = in_vec.at(4);
-    out_pose.orientation.z = in_vec.at(5);
-    out_pose.orientation.w = in_vec.at(6);
+    if(in_vec.size()!=7)
+        throw std::runtime_error("PoseVectorToPoseMsg accepts only vector of "
+                                         "size 7.");
+    else {
+        out_pose.position.x = in_vec.at(0);
+        out_pose.position.y = in_vec.at(1);
+        out_pose.position.z = in_vec.at(2);
+        out_pose.orientation.x = in_vec.at(3);
+        out_pose.orientation.y = in_vec.at(4);
+        out_pose.orientation.z = in_vec.at(5);
+        out_pose.orientation.w = in_vec.at(6);
+    }
 
 }
 
 void conversions::PoseVectorToKDLFrame(const vector<double> &in_vec,
                                        KDL::Frame &out_pose) {
-    geometry_msgs::Pose pose_msg;
-    conversions::PoseVectorToPoseMsg(in_vec, pose_msg);
-    tf::poseMsgToKDL(pose_msg, out_pose);
+    if(in_vec.size()!=7)
+        throw std::runtime_error("PoseVectorToKDLFrame accepts only vector of "
+                                         "size 7.");
+    else {
+        geometry_msgs::Pose pose_msg;
+        conversions::PoseVectorToPoseMsg(in_vec, pose_msg);
+        tf::poseMsgToKDL(pose_msg, out_pose);
+    }
 }
 
 KDL::Frame conversions::PoseVectorToKDLFrame(const std::vector<double> &in_vec){
 
-    geometry_msgs::Pose pose_msg;
-    conversions::PoseVectorToPoseMsg(in_vec, pose_msg);
+    if(in_vec.size()!=7)
+        throw std::runtime_error("PoseVectorToKDLFrame accepts only vector of "
+                                         "size 7.");
+    else {
+        geometry_msgs::Pose pose_msg;
+        conversions::PoseVectorToPoseMsg(in_vec, pose_msg);
 
-    KDL::Frame out_pose;
-    tf::poseMsgToKDL(pose_msg, out_pose);
-    return out_pose;
+        KDL::Frame out_pose;
+        tf::poseMsgToKDL(pose_msg, out_pose);
+        return out_pose;
+    }
 }
 
 
@@ -113,16 +133,20 @@ void conversions::KDLFrameToVector(const KDL::Frame &in_pose,  vector<double> &o
 void conversions::PoseVectorToRvectvec(const std::vector<double> &in_vec,
                                        cv::Vec3d &out_rvec,
                                        cv::Vec3d &out_tvec){
-    KDL::Rotation krot = KDL::Rotation::Quaternion( in_vec[3], in_vec[4],
-                                                    in_vec[5],in_vec[6]);
-    cv::Matx33d mat;
-    conversions::KDLRotToMatx33d(krot, mat);
-    cv::Rodrigues(mat, out_rvec );
+    if(in_vec.size()!=7)
+        throw std::runtime_error("PoseVectorToRvectvec accepts only vector of "
+                                         "size 7.");
+    else {
+        KDL::Rotation krot = KDL::Rotation::Quaternion(in_vec[3], in_vec[4],
+                                                       in_vec[5], in_vec[6]);
+        cv::Matx33d mat;
+        conversions::KDLRotToMatx33d(krot, mat);
+        cv::Rodrigues(mat, out_rvec);
 
-    out_tvec.val[0] = in_vec[0];
-    out_tvec.val[1] = in_vec[1];
-    out_tvec.val[2] = in_vec[2];
-
+        out_tvec.val[0] = in_vec[0];
+        out_tvec.val[1] = in_vec[1];
+        out_tvec.val[2] = in_vec[2];
+    }
 }
 
 void conversions::QuatVectorToKDLRot(const std::vector<double> &in_vec,
