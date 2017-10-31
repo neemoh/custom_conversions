@@ -157,7 +157,7 @@ void conversions::QuatVectorToKDLRot(const std::vector<double> &in_vec,
         throw std::runtime_error("QuatVectorToKDLRot accepts only vector of "
                                          "size 4.");
     else
-        out_rot = KDL::Rotation::Quaternion( in_vec[0], in_vec[1], in_vec[4],
+        out_rot = KDL::Rotation::Quaternion( in_vec[0], in_vec[1], in_vec[2],
                                              in_vec[3]);
 }
 
@@ -167,7 +167,7 @@ KDL::Rotation QuatVectorToKDLRot(const std::vector<double> &in_vec){
         throw std::runtime_error("QuatVectorToKDLRot accepts only vector of "
                                          "size 4.");
     else
-        return KDL::Rotation::Quaternion( in_vec[0], in_vec[1], in_vec[4],
+        return KDL::Rotation::Quaternion( in_vec[0], in_vec[1], in_vec[2],
                                           in_vec[3]);
 }
 void conversions::AxisAngleToKDLRotation(KDL::Vector axis, double angle, KDL::Rotation & out) {
