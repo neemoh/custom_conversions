@@ -9,7 +9,7 @@
 #include <geometry_msgs/Pose.h>
 #include <kdl/frames.hpp>
 #include <tf_conversions/tf_kdl.h>
-#include <opencv-3.2.0-dev/opencv2/opencv.hpp>
+#include <opencv2/opencv.hpp>
 
 namespace conversions {
     // some self explanatory conversions!
